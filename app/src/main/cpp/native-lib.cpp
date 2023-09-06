@@ -1,19 +1,11 @@
 #include <jni.h>
 #include <string>
-#include "jni_bind_release.h"
-
-static constexpr ::jni::Class kPlatformProxy{
-        "com/paulocoutinho/jnibindtest/PlatformProxy",
-        ::jni::Static{
-                ::jni::Method{"onInitializePlatform", ::jni::Return<void>{}, ::jni::Params{}},
-                ::jni::Method{"onHasMapping", ::jni::Return<jboolean>{}, ::jni::Params<jstring>{}},
-        },
-};
+#include "JNIPlatformProxy.hpp"
 
 JNIEXPORT jint JNICALL
 JNI_OnLoad(JavaVM *pjvm, void * /*reserved*/) {
-    static ::jni::JvmRef<::jni::kDefaultJvm> jvm{pjvm};
-    ::jni::StaticRef<kPlatformProxy>{}("onInitializePlatform");
+    xplpc::proxy::JNIPlatformProxy::shared()->setPlatformJavaVM(pjvm);
+    xplpc::proxy::JNIPlatformProxy::shared()->initialize();
     return JNI_VERSION_1_6;
 }
 
