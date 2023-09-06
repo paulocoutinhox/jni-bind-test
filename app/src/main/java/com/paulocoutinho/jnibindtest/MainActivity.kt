@@ -1,8 +1,7 @@
 package com.paulocoutinho.jnibindtest
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.paulocoutinho.jnibindtest.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -17,6 +16,8 @@ class MainActivity : AppCompatActivity() {
 
         // Example of a call to a native method
         binding.sampleText.text = stringFromJNI()
+        binding.sampleText.text = binding.sampleText.text.toString() + "\n\n"
+        binding.sampleText.text = binding.sampleText.text.toString() + testJNI("my test")
     }
 
     /**
@@ -24,4 +25,5 @@ class MainActivity : AppCompatActivity() {
      * which is packaged with this application.
      */
     external fun stringFromJNI(): String
+    external fun testJNI(name: String): Boolean
 }
